@@ -1,7 +1,7 @@
         // Application Configuration
         const CONFIG = {
             API: {
-                baseUrl: 'https://mohan-ai-e2uw.onrender.com', // This will be set by the canvas
+                baseUrl: 'https://mohan-ai-1.onrender.com', // This will be set by the canvas
                 timeout: 15000, // Increased timeout to accommodate file uploads
                 retryAttempts: 2,
                 retryDelay: 1000,
@@ -1083,3 +1083,4 @@
 
 
         new MohanAIChatApp();
+
