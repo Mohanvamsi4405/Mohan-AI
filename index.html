@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohan AI Chat Platform</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked@12.0.0/marked.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app" class="app-container">
+        <header class="header">
+            <div class="container">
+                <div class="header-content">
+                    <h1 class="logo">Mohan AI Chat Platform</h1>
+                    <p class="subtitle">Access 21 cutting-edge AI models through a single intelligent platform</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Tab Navigation -->
+        <nav class="tab-nav">
+            <button class="tab-btn active" data-tab="models">Models</button>
+            <button class="tab-btn" data-tab="chat">Chat</button>
+        </nav>
+
+        <!-- Tab Content Containers -->
+        <main id="tab-content-container">
+            <!-- Models Tab Content -->
+            <div id="models-tab" class="main-content active">
+                <div class="container">
+                    <!-- Category Filter Tabs -->
+                    <div class="category-tabs">
+                        <button class="category-tab active" data-category="all">All Models</button>
+                        <button class="category-tab" data-category="general">💬 General Purpose</button>
+                        <button class="category-tab" data-category="large">🧠 Large Models</button>
+                        <button class="category-tab" data-category="fast">⚡ Fast Models</button>
+                        <button class="category-tab" data-category="specialized">🔧 Specialized</button>
+                        <button class="category-tab" data-category="audio">🎵 Audio Processing</button>
+                    </div>
+
+                    <!-- Search Bar -->
+                    <div class="search-container">
+                        <input type="text" id="model-search" class="form-control search-input" placeholder="Search models by name, category, or ID...">
+                    </div>
+
+                    <!-- Model Grid -->
+                    <div class="model-grid" id="model-grid">
+                        <div class="loading-models">
+                            <div class="loading-spinner"></div>
+                            <p>Loading models...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Tab Content -->
+            <div id="chat-tab" class="main-content">
+                <header class="chat-header">
+                    <div class="container">
+                        <div class="chat-header-content">
+                            <div class="model-info">
+                                <div class="model-details">
+                                    <span class="current-model" id="current-model-name">Model Name</span>
+                                    <div class="model-specs-header">
+                                        <span class="spec-item">
+                                            <span class="spec-label">Tokens:</span>
+                                            <span class="spec-value" id="current-model-tokens">0</span>
+                                        </span>
+                                        <span class="spec-item">
+                                            <span class="spec-label">Speed:</span>
+                                            <span class="spec-value" id="current-model-speed">0s</span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <button class="btn btn--outline btn--sm" id="change-model-btn">Change Model</button>
+                            </div>
+                            <div class="chat-controls">
+                                <button class="btn btn--outline btn--sm" id="clear-chat-btn">Clear Chat</button>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+                
+                <main class="chat-main">
+                    <div class="container">
+                        <div class="chat-container">
+                            <!-- Messages Container -->
+                            <div class="messages-container" id="messages-container">
+                                <div class="welcome-message">
+                                    <div class="welcome-content">
+                                        <h3>Welcome to Mohan AI Chat!</h3>
+                                        <p>Start a conversation by typing a message below, or upload files for analysis.</p>
+                                        <div class="feature-list">
+                                            <div class="feature-item">📝 Text conversations</div>
+                                            
+                                            <div class="feature-item">📄 Document processing</div>
+                                            <div class="feature-item">🎤 Audio transcription</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                
+                            <!-- File Upload Area -->
+                            <div class="file-upload-area hidden" id="file-upload-area">
+                                <div class="file-drop-zone" id="file-drop-zone">
+                                    <div class="file-drop-content">
+                                        <div class="upload-icon">📁</div>
+                                        <h4>Drop files here or click to upload</h4>
+                                        <p>Supports documents (PDF, TXT) and audio (MP3).</p>
+                                        <p class="size-limit">Maximum file size: 25MB (for audio), 10MB (for other files)</p>
+                                    </div>
+                                    <input type="file" id="file-input" multiple accept=".pdf,.txt,.mp3">
+                                </div>
+                            </div>
+                
+                            <!-- Chat Input -->
+                            <div class="chat-input-container">
+                                <div class="chat-input-wrapper">
+                                    <button class="file-upload-btn" id="file-upload-btn" title="Upload files">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66L9.64 16.2a2 2 0 01-2.83-2.83l8.49-8.49"/>
+                                        </svg>
+                                    </button>
+                                    <textarea 
+                                        id="message-input" 
+                                        class="form-control message-input" 
+                                        placeholder="Type your message..." 
+                                        rows="1"
+                                    ></textarea>
+                                    <button class="btn btn--primary send-btn" id="send-btn" disabled>
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                                            <polygon points="22,2 15,22 11,13 2,9"></polygon>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div id="file-attachment-container"></div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal for Model Change Confirmation -->
+    <div class="modal hidden" id="change-model-modal">
+        <div class="modal-backdrop" id="modal-backdrop"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Change Model</h3>
+            </div>
+            <div class="modal-body">
+                <div class="warning-icon">⚠️</div>
+                <p>Changing the model will clear your current chat history and all uploaded files. This action cannot be undone.</p>
+                <p>Are you sure you want to continue?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn--outline" id="cancel-change-btn">Cancel</button>
+                <button class="btn btn--primary" id="confirm-change-btn">Change Model</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div class="modal hidden" id="error-modal">
+        <div class="modal-backdrop" id="error-backdrop"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Connection Error</h3>
+            </div>
+            <div class="modal-body">
+                <div class="error-icon">❌</div>
+                <p id="error-message">An error occurred. Please try again.</p>
+                <div class="error-actions">
+                    <button class="btn btn--outline" id="retry-connection-btn">Retry Connection</button>
+                    <button class="btn btn--secondary" id="switch-demo-btn">Use Demo Mode</button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn--primary" id="error-ok-btn">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay with Timer -->
+    <div class="loading-overlay hidden" id="loading-overlay">
+        <div class="loading-content">
+            <div class="loading-spinner large"></div>
+            <p class="loading-text" id="loading-text">Processing...</p>
+            <p class="loading-subtext" id="loading-subtext">Please wait while we process your request</p>
+            <div class="loading-timer">
+                <div class="timer-progress" id="timer-progress"></div>
+                <span class="timer-text" id="timer-text">15s</span>
+            </div>
+            <button class="btn btn--outline btn--sm" id="cancel-loading-btn">Cancel</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
